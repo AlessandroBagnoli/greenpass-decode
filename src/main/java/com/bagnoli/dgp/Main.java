@@ -1,4 +1,4 @@
-package com.tano.green;
+package com.bagnoli.dgp;
 
 import COSE.Encrypt0Message;
 import COSE.Message;
