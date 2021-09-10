@@ -1,29 +1,30 @@
 package com.tano.green;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-
-import java.util.zip.Inflater;
-
 import COSE.Encrypt0Message;
 import COSE.Message;
 import com.google.iot.cbor.CborMap;
-import com.google.zxing.*;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import nl.minvws.encoding.Base45;
-
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.Objects;
+import java.util.zip.Inflater;
 import javax.imageio.ImageIO;
+import nl.minvws.encoding.Base45;
 
 public class Main {
     private static final int BUFFER_SIZE = 1024;
 
-    public static void main(String args[]) throws Exception{
+    public static void main(String[] args) throws Exception {
 
         // 1 - read text from file
-        File file = new File("green-pass.jpg");
-        BufferedImage bufferedImage = ImageIO.read(file);
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("IMG_2017.PNG");
+        BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(is));
         LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
         Result result = new MultiFormatReader().decode(bitmap);
